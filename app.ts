@@ -1,8 +1,15 @@
+require("dotenv").config({
+    path: process.env.NODE_ENV === "test" ? ".env.test" : ".env"
+});
+
 import { Express } from "express";
 
 const express = require("express");
 const app: Express = express();
-const wordsRouter = require("./routes/words.route");
+
+app.use(express.json());
+
+const wordsRouter = require("./src/routes/words.route");
 
 app.get("/", (req, res) => {
     res.send("Hello World!");

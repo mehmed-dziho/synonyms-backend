@@ -6,8 +6,10 @@
     "author": "mehmed <mehmeddziho98@gmail.com>",
     "license": "MIT",
     "dependencies": {
+        "dotenv": "^16.0.1",
         "express": "^4.18.1",
         "jest": "^28.1.3",
+        "redis": "^4.2.0",
         "supertest": "^6.2.4"
     },
     "scripts": {
