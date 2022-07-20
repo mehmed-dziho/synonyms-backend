@@ -14,7 +14,7 @@ function getWords(search?: string): Word[] {
     return allWords.filter(word => word.text.includes(searchPrepared));
 }
 
-function addWord(text: string): Word {
+function addWord(text: string, groupId?: string): Word {
 
     // check if exists
     // we can get all words like this because word can only belong to single group and with no duplicates
@@ -26,13 +26,24 @@ function addWord(text: string): Word {
         throw new Error("Word already exists.");
     }
 
-    const newGroupId = uuidv4();
+    if (groupId && !data[groupId]) {
+        throw new Error("Synonyms group does not exist.");
+    }
 
-    const newWord = { text, groupId: newGroupId };
 
-    data[newGroupId] = [newWord];
+    if (groupId) {      // Adding synonym
 
-    return newWord;
+        const newSynonym = { text, groupId };
+        data[groupId].push(newSynonym);
+        return newSynonym;
+
+    } else {            // Adding new word
+
+        const newGroupId = uuidv4();
+        const newWord = { text, groupId: newGroupId };
+        data[newGroupId] = [newWord];
+        return newWord;
+    }
 }
 
 module.exports = {

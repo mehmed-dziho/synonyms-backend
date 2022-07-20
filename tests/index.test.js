@@ -47,6 +47,23 @@ it("words flow", async () => {
     response = await (request(app).get('/words?search= cle '));
     expect(response.status).toBe(200);
     expect(response.body).toStrictEqual([newWord]);
+
+
+    // create synonym, bad group
+    response = await (request(app).post('/words').send({
+        word: "Wash",
+        groupId: "FAIL"
+    }));
+    expect(response.status).toBe(400);
+
+    // create synonym, should be success
+    response = await (request(app).post('/words').send({
+        word: "Wash",
+        groupId: newWord.groupId
+    }));
+    expect(response.status).toBe(201);
+    expect(response.body.text).toBe("wash");
+    expect(response.body.groupId).toBe(newWord.groupId);
 })
 
 // CLEANUP

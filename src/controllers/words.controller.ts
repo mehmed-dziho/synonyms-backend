@@ -18,6 +18,7 @@ const get: RequestHandler = async (req, res, next) => {
 const post: RequestHandler = async (req, res, next) => {
     try {
         const word = req.body?.word?.trim()?.toLowerCase();
+        const groupId = req.body.groupId;
 
         if (!word) {
             return res.status(400).json({ message: "Word is required" });
@@ -25,7 +26,7 @@ const post: RequestHandler = async (req, res, next) => {
 
         // TODO persist into db
         try {
-            const newWord = wordsService.addWord(word);
+            const newWord = wordsService.addWord(word, groupId);
 
             return res.status(201).json(newWord);
         } catch (err: unknown) {
