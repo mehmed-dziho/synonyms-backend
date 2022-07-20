@@ -4,7 +4,11 @@ const wordsService = require("../services/words.services");
 
 const get: RequestHandler = async (req, res, next) => {
     try {
-        res.json([]);
+        const search = req.query?.search;
+
+        const words = wordsService.getWords(search as string);
+
+        return res.json(words);
     } catch (err) {
         console.error(err);
         next(err);
@@ -13,16 +17,20 @@ const get: RequestHandler = async (req, res, next) => {
 
 const post: RequestHandler = async (req, res, next) => {
     try {
-        const { word } = req.body;
+        const word = req.body?.word?.trim()?.toLowerCase();
 
         if (!word) {
             return res.status(400).json({ message: "Word is required" });
         }
 
         // TODO persist into db
-        wordsService.addWord(word);
+        try {
+            const newWord = wordsService.addWord(word);
 
-        res.status(201).json([]);
+            return res.status(201).json(newWord);
+        } catch (err: unknown) {
+            return res.status(400).json({ message: err });
+        }
     } catch (err) {
         console.error(err);
         next(err);
