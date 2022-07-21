@@ -38,7 +38,7 @@ const post: RequestHandler = async (req, res, next) => {
         const groupId = req.body.groupId;
 
         if (!word) {
-            return res.status(400).json({ message: "Word is required" });
+            return res.status(400).json({ message: "Word cant be blank." });
         }
 
         // TODO persist into db
