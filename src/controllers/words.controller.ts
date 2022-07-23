@@ -41,17 +41,12 @@ const post: RequestHandler = async (req, res, next) => {
             return res.status(400).json({ message: "Word cant be blank." });
         }
 
-        // TODO persist into db
-        try {
-            const newWord = wordsService.addWord(word, groupId);
+        const newWord = wordsService.addWord(word, groupId);
+        return res.status(201).json(newWord);
 
-            return res.status(201).json(newWord);
-        } catch (err: unknown) {
-            return res.status(400).json({ message: err });
-        }
-    } catch (err) {
-        // console.error(err);
-        return res.status(400).json({ message: err });
+    } catch (err: unknown) {
+        const message = (err as Error).message ?? err;
+        return res.status(400).json({ message });
     }
 };
 

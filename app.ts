@@ -6,6 +6,8 @@ import { Word } from "./src/types/types";
 import { Express } from "express";
 
 // Structure of data will be { groupId: Array<Word> }
+// where groupId is the id of a synonym group
+// redis can also be used instead of this global variable
 export const data: Record<string, Array<Word>> = {};
 
 // Initialize app
@@ -14,7 +16,7 @@ const cors = require("cors");
 const app: Express = express();
 
 app.use(express.json());
-app.use(cors())
+app.use(cors());
 
 // Routers
 const wordsRouter = require("./src/routes/words.route");

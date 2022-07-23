@@ -1,0 +1,18 @@
+config:
+  target: 'http://localhost:4000'
+  phases:
+    - duration: 20
+      arrivalRate: 200
+      name: Stress test /words POST endpoint
+
+  payload:
+    path: "words.csv"
+    fields:
+      - "word"
+
+scenarios:
+  - flow:
+      - post:
+          url: "/words"
+          json:
+            word: "{{ word }}"
