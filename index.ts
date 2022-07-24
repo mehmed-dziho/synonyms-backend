@@ -3,7 +3,7 @@ import app, { data } from "./app";
 const port = 4000;
 
 const MAXIMUM_ALLOWED_MEMORY_USAGE = 400;       // in MB
-const CHECK_MEMORY_EVERY_N_SECONDS = 30;
+const CHECK_MEMORY_EVERY_N_MINUTES = 1;
 
 app.listen(process.env.PORT || port, () => {
     console.log(`App server listening on port ${port}`);
@@ -20,5 +20,5 @@ app.listen(process.env.PORT || port, () => {
                 delete data[synonymGroupId];
             }
         }
-    }, 1000 * CHECK_MEMORY_EVERY_N_SECONDS);
+    }, 1000 * 60 * CHECK_MEMORY_EVERY_N_MINUTES);
 });

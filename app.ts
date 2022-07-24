@@ -6,8 +6,12 @@ import { Word } from "./src/types/types";
 import { Express } from "express";
 
 // Structure of data will be { groupId: Array<Word> }
-// where groupId is the id of a synonym group
-// redis can also be used instead of this global variable
+// Each Word is an object { text, groupId } where groupId is the id of a synonym group
+
+// We expect text to be unique, so we can use it as unique ID
+// If two words can have the same text, we would need to introduce a unique identifier field (ex. uuid)
+
+// Redis can also be used instead of this global variable
 export const data: Record<string, Array<Word>> = {};
 
 // Initialize app

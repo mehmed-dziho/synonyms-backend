@@ -64,12 +64,9 @@ const put: RequestHandler = async (req, res, next) => {
             return res.status(400).json({ message: "Text cant be empty." });
         }
 
-        try {
-            const updatedWord = wordsService.updateWord(word, newText);
-            return res.status(200).json(updatedWord);
-        } catch (err: unknown) {
-            return res.status(400).json({ message: err });
-        }
+        const updatedWord = wordsService.updateWord(word, newText);
+
+        return res.status(200).json(updatedWord);
     } catch (err) {
         // console.error(err);
         return res.status(400).json({ message: err });
